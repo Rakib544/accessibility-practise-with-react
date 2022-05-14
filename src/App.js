@@ -1,10 +1,14 @@
-import "./App.css";
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Accordion from "./components/accordion";
+import Home from "./components/home";
 function App() {
   return (
-    <div className="App">
-      <h1>Hello world I am now practising about web accessibility</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/accordion" element={<Accordion />} />
+      </Routes>
+    </Router>
   );
 }
 
