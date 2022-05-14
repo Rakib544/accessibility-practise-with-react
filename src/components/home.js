@@ -20,6 +20,12 @@ const Home = () => {
         >
           select
         </Link>
+        <Link
+          className="text-sky-500 text-xl underline my-2 block"
+          to="/navbar"
+        >
+          Navbar
+        </Link>
       </div>
     </div>
   );

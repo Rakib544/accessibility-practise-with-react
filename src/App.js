@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Accordion from "./components/accordion";
 import Home from "./components/home";
+import Test from "./components/navbar";
 import Select from "./components/select";
 
 const options = [
@@ -34,6 +35,7 @@ function App() {
               <Select options={options} onOptionSelected={onOptionSelected} />
             }
           />
+          <Route path="/navbar" element={<Test />} />
         </Routes>
       </Router>
     </div>

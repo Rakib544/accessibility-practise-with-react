@@ -1,0 +1,74 @@
+* {
+  box-sizing: border-box;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+header,
+section {
+  padding: 2rem;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  padding: 1rem;
+  position: relative;
+}
+
+.menubar.horizontal {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.menubar.horizontal > li {
+  flex: 1;
+}
+
+.menubar.vertical {
+  display: flex;
+  flex-flow: column;
+  width: fit-content;
+}
+
+.submenu {
+  background: whitesmoke;
+  z-index: 1;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.submenu[hidden=""] {
+  pointer-events: none;
+}
+
+.submenu .submenu {
+  padding: 0;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  width: fit-content;
+  background: gainsboro;
+}
+
+.menubar.vertical .submenu {
+  padding: 0;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  width: fit-content;
+}
