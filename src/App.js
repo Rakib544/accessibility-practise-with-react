@@ -1,14 +1,42 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Accordion from "./components/accordion";
 import Home from "./components/home";
+import Select from "./components/select";
+
+const options = [
+  {
+    label: "Strict Black",
+    value: "strict-black",
+  },
+  {
+    label: "Heavenly Green",
+    value: "heavenly-green",
+  },
+  {
+    label: "Sweet Pink",
+    value: "pink",
+  },
+];
+
 function App() {
+  const onOptionSelected = (option, optionIndex) => {
+    console.log({ option, optionIndex });
+  };
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/accordion" element={<Accordion />} />
-      </Routes>
-    </Router>
+    <div className="px-20 mt-10">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/accordion" element={<Accordion />} />
+          <Route
+            path="/select"
+            element={
+              <Select options={options} onOptionSelected={onOptionSelected} />
+            }
+          />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

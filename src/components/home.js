@@ -4,10 +4,21 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className="container">
-      <h1 className="title">My all accessible components list link:</h1>
+      <h1 className="text-3xl text-center font-medium">
+        My all accessible components list link:
+      </h1>
       <div>
-        <Link className="link" to="/accordion">
+        <Link
+          className="text-sky-500 text-xl underline my-2 block"
+          to="/accordion"
+        >
           Accordion
+        </Link>
+        <Link
+          className="text-sky-500 text-xl underline my-2 block"
+          to="/select"
+        >
+          select
         </Link>
       </div>
     </div>
