@@ -26,6 +26,12 @@ const Home = () => {
         >
           Navbar
         </Link>
+        <Link
+          className="text-sky-500 text-xl underline my-2 block"
+          to="/practice-navbar"
+        >
+          Practice Navbar
+        </Link>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import Submenu from "./submenu";
 const Menubar = ({ children, direction, onKeyDown, ...props }) => {
   const id = React.useRef(_.uniqueId("menubar--")).current;
   const menuItems = React.useRef(new Set()).current;
+  console.log(menuItems);
   const menuRef = React.useRef(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const previousIndex = usePrevious(currentIndex) ?? 0;

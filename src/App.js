@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Accordion from "./components/accordion";
 import Home from "./components/home";
 import Test from "./components/navbar";
+import PracticeNav from "./components/pracrise-nav/practice-nav";
 import Select from "./components/select";
 
 const options = [
@@ -36,6 +37,7 @@ function App() {
             }
           />
           <Route path="/navbar" element={<Test />} />
+          <Route path="/practice-navbar" element={<PracticeNav />} />
         </Routes>
       </Router>
     </div>
