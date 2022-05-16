@@ -23,7 +23,6 @@ function PracticeMenubar({ children, ...props }) {
   }, [currentIndex, menuItems, previousIndex]);
 
   //   helper method
-
   const first = () => setCurrentIndex(0);
 
   const last = () => setCurrentIndex(menuItems.size - 1);
