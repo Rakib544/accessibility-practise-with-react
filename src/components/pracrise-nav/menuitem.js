@@ -1,8 +1,10 @@
 import * as React from "react";
-import { MenubarContext } from "../../contexts/menubar";
+import { MenubarContext, SubmenuContext } from "../../contexts/menubar";
 
 function PracticeMenuItem({ children, ...props }) {
   const menubarContext = React.useContext(MenubarContext);
+  const submenuContext = React.useContext(SubmenuContext);
+
   if (!menubarContext) {
     throw Error("MenuItem must be used within a Menubar Context");
   }
@@ -23,7 +25,7 @@ function PracticeMenuItem({ children, ...props }) {
   const childProps = {
     "data-menubar-menuitem": "",
     role: "menuitem",
-    tabIndex: isFirstChild ? "0" : "-1",
+    tabIndex: !submenuContext && isFirstChild ? "0" : "-1",
   };
 
   React.useEffect(() => {

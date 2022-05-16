@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "underscore";
 import { SubmenuContext } from "../../contexts/menubar";
 
 const submenuInitialState = {
@@ -35,6 +36,13 @@ function Submenu({ children }) {
     submenuInitialState
   );
 
+  const id = React.useRef(_.uniqueId("submenu--")).current;
+  const buttonId = `button--${id}`;
+  const listId = `list--${id}`;
+
+  const buttonRef = React.useRef(null);
+  const listRef = React.useRef(null);
+
   //   defining the helper functions
   const open = React.useCallback(() => dispatch({ type: "expand" }), []);
   const close = React.useCallback(() => dispatch({ type: "collapse" }), []);
@@ -52,9 +60,29 @@ function Submenu({ children }) {
   );
 
   const value = React.useMemo(
-    () => ({ open, close, first, last, move }),
-    [close, first, last, move, open]
+    () => ({
+      open,
+      close,
+      first,
+      last,
+      move,
+      buttonId,
+      listId,
+      buttonRef,
+      listRef,
+    }),
+    [buttonId, close, first, last, listId, move, open]
   );
+
+  const { currentIndex, previousIndex } = state;
+
+  React.useEffect(() => {
+    const items = Array.from(menuItems);
+    if (currentIndex !== previousIndex) {
+      const currentNode = items[currentIndex]?.firstChild;
+      currentNode?.focus();
+    }
+  }, [currentIndex, menuItems, previousIndex]);
 
   return (
     <SubmenuContext.Provider value={value}>{children}</SubmenuContext.Provider>
