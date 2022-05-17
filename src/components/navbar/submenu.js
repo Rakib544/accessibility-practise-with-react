@@ -1,7 +1,8 @@
-/* eslint-disable no-unused-expressions */
 import * as React from "react";
 import _ from "underscore";
-import { MenubarContext, SubmenuContext } from "../../contexts/menubar";
+import { MenubarContext } from "../../contexts/menubar";
+
+export const SubmenuContext = React.createContext(null);
 
 const SUBMENU_INITIAL_STATE = {
   isExpanded: false,
@@ -27,7 +28,17 @@ function submenuReducer(state, action) {
   }
 }
 
-const Trigger = ({ onClick, onFocus, onKeyDown, onMouseOver, ...props }) => {
+/**************************************************************************
+ * COMPONENTS
+ **************************************************************************/
+
+export const SubmenuTrigger = ({
+  onClick,
+  onFocus,
+  onKeyDown,
+  onMouseOver,
+  ...props
+}) => {
   const context = React.useContext(SubmenuContext);
   const menubarContext = React.useContext(MenubarContext);
 
@@ -91,7 +102,11 @@ const Trigger = ({ onClick, onFocus, onKeyDown, onMouseOver, ...props }) => {
           first();
           break;
         case "ArrowLeft":
-          isRootMenu ? last() : close();
+          if (isRootMenu) {
+            last();
+          } else {
+            close();
+          }
           break;
         default:
           break;
@@ -99,11 +114,10 @@ const Trigger = ({ onClick, onFocus, onKeyDown, onMouseOver, ...props }) => {
     }
   };
 
-  const buttonProps = {
+  const triggerProps = {
     ...props,
     id: buttonId,
     ref: buttonRef,
-    type: "button",
     "aria-haspopup": true,
     "aria-expanded": isExpanded,
     "aria-controls": listId,
@@ -126,19 +140,19 @@ const Trigger = ({ onClick, onFocus, onKeyDown, onMouseOver, ...props }) => {
       const targetMenu = e.target?.parentNode?.parentNode;
       const relatedMenuItem = e.relatedTarget?.parentNode;
       const relatedMenu = relatedMenuItem?.parentNode;
-      const isRelatedFromSubmenu =
+      const isFromSubmenu =
         relatedMenuItem?.getAttribute("data-menubar-submenu-listitem") === "";
 
-      if (isRelatedFromSubmenu && relatedMenu !== targetMenu) {
+      if (isFromSubmenu && relatedMenu !== targetMenu) {
         open();
       }
     },
   };
 
-  return <button {...buttonProps} />;
+  return <button {...triggerProps} />;
 };
 
-const List = ({ children, onClick, onKeyDown, ...props }) => {
+export const SubmenuList = ({ children, onClick, onKeyDown, ...props }) => {
   const context = React.useContext(SubmenuContext);
   const menubarContext = React.useContext(MenubarContext);
 
@@ -156,7 +170,7 @@ const List = ({ children, onClick, onKeyDown, ...props }) => {
     currentIndex,
     isRootMenu,
     isExpanded,
-    dispatch,
+    move,
     close,
     first,
     last,
@@ -166,12 +180,12 @@ const List = ({ children, onClick, onKeyDown, ...props }) => {
 
   const previous = () => {
     const index = currentIndex === 0 ? menuItems.size - 1 : currentIndex - 1;
-    dispatch({ type: "move", index });
+    move(index);
   };
 
   const next = () => {
     const index = currentIndex === menuItems.size - 1 ? 0 : currentIndex + 1;
-    dispatch({ type: "move", index });
+    move(index);
   };
 
   const match = (e) => {
@@ -203,7 +217,7 @@ const List = ({ children, onClick, onKeyDown, ...props }) => {
       return item === nextMatch;
     });
 
-    dispatch({ type: "move", index });
+    move(index);
   };
 
   const keyDown = (e) => {
@@ -262,8 +276,11 @@ const List = ({ children, onClick, onKeyDown, ...props }) => {
 
   const listProps = {
     ...props,
+    ref: listRef,
     id: listId,
     role: "menu",
+    hidden: !isExpanded,
+    className: "submenu",
     "aria-hidden": !isExpanded,
     "aria-labelledby": buttonId,
     "aria-orientation": "vertical",
@@ -278,33 +295,25 @@ const List = ({ children, onClick, onKeyDown, ...props }) => {
     },
   };
 
-  return (
-    <ul hidden={!isExpanded} ref={listRef} className="submenu" {...listProps}>
-      {children}
-    </ul>
-  );
+  return <ul {...listProps}>{children}</ul>;
 };
 
-const Submenu = ({ children }) => {
+export const Submenu = ({ children }) => {
   const id = React.useRef(_.uniqueId("submenu--")).current;
   const buttonId = `button--${id}`;
-  const listId = `list--${id}`;
-
   const buttonRef = React.useRef(null);
+  const listId = `list--${id}`;
   const listRef = React.useRef(null);
-
   const menuItems = React.useRef(new Set()).current;
   const isRootMenu = !React.useContext(SubmenuContext);
-
   const [state, dispatch] = React.useReducer(
     submenuReducer,
     SUBMENU_INITIAL_STATE
   );
-
   const { isExpanded, currentIndex, previousIndex } = state;
 
   const first = React.useCallback(
-    () => dispatch({ type: "move", index: 0 }),
+    () => dispatch({ type: "expand", index: 0 }),
     []
   );
 
@@ -313,38 +322,25 @@ const Submenu = ({ children }) => {
     [menuItems.size]
   );
 
+  const move = React.useCallback(
+    (index) => dispatch({ type: "move", index }),
+    []
+  );
+
   const open = React.useCallback(() => dispatch({ type: "expand" }), []);
 
   const close = React.useCallback(
-    (focusButton = false) => {
+    (focusButton) => {
       if (isExpanded) {
-        focusButton && buttonRef.current?.focus();
+        if (focusButton) {
+          buttonRef.current?.focus();
+        }
+
         dispatch({ type: "collapse" });
       }
     },
-    [isExpanded]
+    [buttonRef, isExpanded]
   );
-
-  React.useEffect(() => {
-    const items = Array.from(menuItems);
-
-    if (currentIndex !== previousIndex) {
-      const currentNode = items[currentIndex]?.firstChild;
-      currentNode?.focus();
-    }
-  }, [menuItems, currentIndex, previousIndex]);
-
-  React.useEffect(() => {
-    const menuNode = listRef.current.parentNode;
-
-    menuNode?.addEventListener("mouseenter", () => open(), false);
-    menuNode?.addEventListener("mouseleave", () => close(), false);
-
-    return () => {
-      menuNode?.removeEventListener("mouseenter", () => open(), false);
-      menuNode?.removeEventListener("mouseleave", () => close(), false);
-    };
-  }, [isExpanded, close, open]);
 
   const value = React.useMemo(
     () => ({
@@ -356,7 +352,7 @@ const Submenu = ({ children }) => {
       currentIndex,
       isRootMenu,
       isExpanded,
-      dispatch,
+      move,
       close,
       open,
       first,
@@ -371,7 +367,7 @@ const Submenu = ({ children }) => {
       currentIndex,
       isRootMenu,
       isExpanded,
-      dispatch,
+      move,
       close,
       open,
       first,
@@ -379,12 +375,28 @@ const Submenu = ({ children }) => {
     ]
   );
 
+  React.useEffect(() => {
+    const items = Array.from(menuItems);
+
+    if (currentIndex !== previousIndex) {
+      const currentNode = items[currentIndex]?.firstChild;
+      currentNode?.focus();
+    }
+  }, [menuItems, currentIndex, previousIndex]);
+
+  React.useEffect(() => {
+    const menuNode = listRef.current?.parentNode;
+
+    menuNode?.addEventListener("mouseenter", () => open(), false);
+    menuNode?.addEventListener("mouseleave", () => close(), false);
+
+    return () => {
+      menuNode?.removeEventListener("mouseenter", () => open(), false);
+      menuNode?.removeEventListener("mouseleave", () => close(), false);
+    };
+  }, [isExpanded, close, open, listRef]);
+
   return (
     <SubmenuContext.Provider value={value}>{children}</SubmenuContext.Provider>
   );
 };
-
-Submenu.Trigger = Trigger;
-Submenu.List = List;
-
-export default Submenu;

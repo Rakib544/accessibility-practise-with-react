@@ -1,5 +1,7 @@
 import * as React from "react";
 import Menubar from "./menubar";
+import MenuItem from "./menuitem";
+import { Submenu, SubmenuList, SubmenuTrigger } from "./submenu";
 
 export const MENUBAR_LIST__1 = "menubar-list--1";
 export const MENUBAR_MENUITEM__1 = "menubar-menuitem--1";
@@ -28,121 +30,115 @@ const DummyLink = (props) => (
 
 const MockMenuItems = () => (
   <React.Fragment>
-    <Menubar.MenuItem>
+    <MenuItem>
       <DummyLink data-testid={MENUBAR_MENUITEM__1} />
-    </Menubar.MenuItem>
+    </MenuItem>
 
-    <Menubar.MenuItem>
+    <MenuItem>
       <DummyLink data-testid={MENUBAR_MENUITEM__2} />
-    </Menubar.MenuItem>
+    </MenuItem>
 
-    <Menubar.MenuItem>
+    <MenuItem>
       {(menuItemProps) => (
-        <Menubar.Submenu>
-          <Menubar.Submenu.Trigger
-            data-testid={ROOT_TRIGGER__1}
-            {...menuItemProps}
-          >
+        <Submenu>
+          <SubmenuTrigger data-testid={ROOT_TRIGGER__1} {...menuItemProps}>
             Root Trigger
-          </Menubar.Submenu.Trigger>
+          </SubmenuTrigger>
 
-          <Menubar.Submenu.List data-testid={ROOT_LIST__1}>
-            <Menubar.MenuItem>
+          <SubmenuList data-testid={ROOT_LIST__1}>
+            <MenuItem>
               <DummyLink data-testid={ROOT_LIST__1_MENUITEM__1} />
-            </Menubar.MenuItem>
+            </MenuItem>
 
-            <Menubar.MenuItem>
+            <MenuItem>
               {(menuItemProps) => (
-                <Menubar.Submenu>
-                  <Menubar.Submenu.Trigger
+                <Submenu>
+                  <SubmenuTrigger
                     data-testid={SUBMENU_TRIGGER__1}
                     {...menuItemProps}
                   >
                     Submenu Trigger
-                  </Menubar.Submenu.Trigger>
+                  </SubmenuTrigger>
 
-                  <Menubar.Submenu.List data-testid={SUBMENU_LIST__1}>
-                    <Menubar.MenuItem>
+                  <SubmenuList data-testid={SUBMENU_LIST__1}>
+                    <MenuItem>
                       <DummyLink data-testid={SUBMENU_LIST__1_MENUITEM__1} />
-                    </Menubar.MenuItem>
+                    </MenuItem>
 
-                    <Menubar.MenuItem>
+                    <MenuItem>
                       <DummyLink data-testid={SUBMENU_LIST__1_MENUITEM__2} />
-                    </Menubar.MenuItem>
+                    </MenuItem>
 
-                    <Menubar.MenuItem>
+                    <MenuItem>
                       <DummyLink data-testid={SUBMENU_LIST__1_MENUITEM__3} />
-                    </Menubar.MenuItem>
-                  </Menubar.Submenu.List>
-                </Menubar.Submenu>
+                    </MenuItem>
+                  </SubmenuList>
+                </Submenu>
               )}
-            </Menubar.MenuItem>
+            </MenuItem>
 
-            <Menubar.MenuItem>
+            <MenuItem>
               <DummyLink data-testid={ROOT_LIST__1_MENUITEM__2} />
-            </Menubar.MenuItem>
+            </MenuItem>
 
-            <Menubar.MenuItem>
+            <MenuItem>
               <DummyLink data-testid={ROOT_LIST__1_MENUITEM__3} />
-            </Menubar.MenuItem>
-          </Menubar.Submenu.List>
-        </Menubar.Submenu>
+            </MenuItem>
+          </SubmenuList>
+        </Submenu>
       )}
-    </Menubar.MenuItem>
+    </MenuItem>
 
-    <Menubar.MenuItem>
+    <MenuItem>
       {(menuItemProps) => (
-        <Menubar.Submenu>
-          <Menubar.Submenu.Trigger
-            data-testid={ROOT_TRIGGER__2}
-            {...menuItemProps}
-          >
+        <Submenu>
+          <SubmenuTrigger data-testid={ROOT_TRIGGER__2} {...menuItemProps}>
             Root Trigger
-          </Menubar.Submenu.Trigger>
+          </SubmenuTrigger>
 
-          <Menubar.Submenu.List data-testid={ROOT_LIST__2}>
-            <Menubar.MenuItem>
+          <SubmenuList data-testid={ROOT_LIST__2}>
+            <MenuItem>
               <DummyLink />
-            </Menubar.MenuItem>
+            </MenuItem>
 
-            <Menubar.MenuItem>
+            <MenuItem>
               {(menuItemProps) => (
-                <Menubar.Submenu>
-                  <Menubar.Submenu.Trigger {...menuItemProps}>
+                <Submenu>
+                  <SubmenuTrigger {...menuItemProps}>
                     Submenu Trigger
-                  </Menubar.Submenu.Trigger>
-                  <Menubar.Submenu.List data-testid={SUBMENU_LIST__2}>
-                    <Menubar.MenuItem>
+                  </SubmenuTrigger>
+                  <SubmenuList data-testid={SUBMENU_LIST__2}>
+                    <MenuItem>
                       <DummyLink />
-                    </Menubar.MenuItem>
+                    </MenuItem>
 
-                    <Menubar.MenuItem>
+                    <MenuItem>
                       <DummyLink />
-                    </Menubar.MenuItem>
+                    </MenuItem>
 
-                    <Menubar.MenuItem>
+                    <MenuItem>
                       <DummyLink />
-                    </Menubar.MenuItem>
-                  </Menubar.Submenu.List>
-                </Menubar.Submenu>
+                    </MenuItem>
+                  </SubmenuList>
+                </Submenu>
               )}
-            </Menubar.MenuItem>
+            </MenuItem>
 
-            <Menubar.MenuItem>
+            <MenuItem>
               <DummyLink />
-            </Menubar.MenuItem>
+            </MenuItem>
 
-            <Menubar.MenuItem>
+            <MenuItem>
               <DummyLink />
-            </Menubar.MenuItem>
-          </Menubar.Submenu.List>
-        </Menubar.Submenu>
+            </MenuItem>
+          </SubmenuList>
+        </Submenu>
       )}
-    </Menubar.MenuItem>
+    </MenuItem>
 
-    <Menubar.MenuItem>
+    <MenuItem>
       <DummyLink data-testid={MENUBAR_MENUITEM__3} />
-    </Menubar.MenuItem>
+    </MenuItem>
   </React.Fragment>
 );
 

@@ -4,7 +4,7 @@ import _ from "underscore";
 import { MenubarContext } from "../../contexts/menubar";
 import { usePrevious } from "../../hooks/usePrevious";
 import MenuItem from "./menuitem";
-import Submenu from "./submenu";
+import { Submenu } from "./submenu";
 
 const Menubar = ({ children, direction, onKeyDown, ...props }) => {
   const id = React.useRef(_.uniqueId("menubar--")).current;
