@@ -31,46 +31,41 @@ const DummyLink = (props) => (
 const MockMenuItems = () => (
   <React.Fragment>
     <MenuItem>
-      <DummyLink data-testid={MENUBAR_MENUITEM__1} />
+      <DummyLink />
     </MenuItem>
 
     <MenuItem>
-      <DummyLink data-testid={MENUBAR_MENUITEM__2} />
+      <DummyLink />
     </MenuItem>
 
     <MenuItem>
       {(menuItemProps) => (
         <Submenu>
-          <SubmenuTrigger data-testid={ROOT_TRIGGER__1} {...menuItemProps}>
-            Root Trigger
-          </SubmenuTrigger>
+          <SubmenuTrigger {...menuItemProps}>Root Trigger</SubmenuTrigger>
 
-          <SubmenuList data-testid={ROOT_LIST__1}>
+          <SubmenuList>
             <MenuItem>
-              <DummyLink data-testid={ROOT_LIST__1_MENUITEM__1} />
+              <DummyLink />
             </MenuItem>
 
             <MenuItem>
               {(menuItemProps) => (
                 <Submenu>
-                  <SubmenuTrigger
-                    data-testid={SUBMENU_TRIGGER__1}
-                    {...menuItemProps}
-                  >
+                  <SubmenuTrigger {...menuItemProps}>
                     Submenu Trigger
                   </SubmenuTrigger>
 
-                  <SubmenuList data-testid={SUBMENU_LIST__1}>
+                  <SubmenuList>
                     <MenuItem>
-                      <DummyLink data-testid={SUBMENU_LIST__1_MENUITEM__1} />
+                      <DummyLink />
                     </MenuItem>
 
                     <MenuItem>
-                      <DummyLink data-testid={SUBMENU_LIST__1_MENUITEM__2} />
+                      <DummyLink />
                     </MenuItem>
 
                     <MenuItem>
-                      <DummyLink data-testid={SUBMENU_LIST__1_MENUITEM__3} />
+                      <DummyLink />
                     </MenuItem>
                   </SubmenuList>
                 </Submenu>
@@ -92,11 +87,9 @@ const MockMenuItems = () => (
     <MenuItem>
       {(menuItemProps) => (
         <Submenu>
-          <SubmenuTrigger data-testid={ROOT_TRIGGER__2} {...menuItemProps}>
-            Root Trigger
-          </SubmenuTrigger>
+          <SubmenuTrigger {...menuItemProps}>Root Trigger</SubmenuTrigger>
 
-          <SubmenuList data-testid={ROOT_LIST__2}>
+          <SubmenuList>
             <MenuItem>
               <DummyLink />
             </MenuItem>
@@ -107,7 +100,7 @@ const MockMenuItems = () => (
                   <SubmenuTrigger {...menuItemProps}>
                     Submenu Trigger
                   </SubmenuTrigger>
-                  <SubmenuList data-testid={SUBMENU_LIST__2}>
+                  <SubmenuList>
                     <MenuItem>
                       <DummyLink />
                     </MenuItem>
@@ -137,7 +130,7 @@ const MockMenuItems = () => (
     </MenuItem>
 
     <MenuItem>
-      <DummyLink data-testid={MENUBAR_MENUITEM__3} />
+      <DummyLink />
     </MenuItem>
   </React.Fragment>
 );

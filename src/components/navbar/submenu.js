@@ -44,7 +44,7 @@ export const SubmenuTrigger = ({
 
   if (!context || !menubarContext) {
     throw new Error(
-      "Submenu.Trigger must be used within a Menubar & Submenu Context"
+      "SubmenuTrigger must be used within a Menubar & Submenu Context"
     );
   }
 

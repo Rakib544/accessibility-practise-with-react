@@ -1,6 +1,9 @@
 // import "../../styles/navbar.css";
 import PracticeMenubar from "./menubar";
 import PracticeMenuItem from "./menuitem";
+import { PracticeSubmenu } from "./submenu";
+import { PracticeSubmenuList } from "./submenuList";
+import { PracticeSubmenuTrigger } from "./submenuTrigger";
 
 function PracticeNav() {
   return (
@@ -26,12 +29,19 @@ function PracticeNav() {
           </a>
         </PracticeMenuItem>
         <PracticeMenuItem>
-          <a
-            href="#Rakib"
-            className="focus:bg-sky-600 text-white focus:outline-none focus:border-2 focus:border-white px-4 py-2"
-          >
-            Academics
-          </a>
+          <PracticeSubmenu>
+            <PracticeSubmenuTrigger>Test</PracticeSubmenuTrigger>
+            <PracticeSubmenuList>
+              <PracticeMenuItem>
+                <a
+                  href="#Rakib"
+                  className="focus:bg-sky-600 text-white focus:outline-none focus:border-2 focus:border-white px-4 py-2"
+                >
+                  Admissions
+                </a>
+              </PracticeMenuItem>
+            </PracticeSubmenuList>
+          </PracticeSubmenu>
         </PracticeMenuItem>
       </PracticeMenubar>
     </nav>
